@@ -17,7 +17,7 @@ jobs:
 
   job-1:
 
-    runs-on: ubantu-latest
+    runs-on: ubuntu-latest
 
     steps:
 
