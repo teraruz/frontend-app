@@ -1,22 +1,27 @@
-name: Deploy to Github Page
+name: Deploy to Github Page #ชื่อ workflow
 
 on:
   push:
     tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
+      - '[0-9]+.[0-9]+.[0-9]+' #กำหนดให้ทำงานเมื่อมีการ push tag ที่เป็น version
 
 jobs:
   build-prod-job:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest #กำหนดให้ทำงานบนระบบปฏิบัติการ Ubuntu
     steps:
-      - name: Clone Repo 
+      - name: Clone Repo #โคลนโปรเจกต์
         uses: actions/checkout@v6
-      - name: Setup Node.js version to 24.x
+      - name: Setup Node.js version to 24.x #ตั้งค่า Node.js version to 24.x
         uses: actions/setup-node@v6
         with:
           node-version: '24.x'
           cache: 'npm'
       - name: Install Dependencies
         run: npm ci #clean install แทน npm install
-      - name: Build Project
+      - name: Build Project (production and create dist folder)
         run: npm run build #สร้างโปรเจกต์
+      - name: Upload dist folder artifact
+        uses: actions/upload-artifact@v6 #อัปโหลด dist folder artifact
+        with:
+          name: dist-production #ชื่อ artifact
+          path: dist #path ของ artifact
