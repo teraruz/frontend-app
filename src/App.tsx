@@ -17,7 +17,7 @@ function App() {
         </div>
         <div>
           <h1>GIT SYSTEM</h1>
-          <p> VERSION 3.0.0 </p>
+          <p> VERSION 3.0.5</p>
           <p>
             This is <code>Git Course Frontend App</code> by <code>National Telecom Public Company Limited</code>
           </p>
