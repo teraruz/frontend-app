@@ -27,8 +27,9 @@ jobs:
     environment: SERVER_DETAILS
     env:
       CONTAINER_NAME: ${{ github.actor }}
-      SERVER_PORT: 7891 #http://45.32.108.242:7891
-      DOCKER_IMAGE_URL: 'ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}: ${{ github.ref_name }}'
+      SERVER_PORT: 7891
+      # แก้ไข 1: ลบช่องว่างหลังเครื่องหมาย :
+      DOCKER_IMAGE_URL: 'ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:${{ github.ref_name }}'
     steps:
       - name: Execute remote ssh using password to production server
         uses: appleboy/ssh-action@v1.2.5 
@@ -40,7 +41,8 @@ jobs:
           script: |
             docker -v
             docker logout ghcr.io
-            docker login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io/${{ github.actor }}/${{ github.event.repository.name}}
+            # แก้ไข 2: ลบ path ด้านหลังออก ให้เหลือแค่ ghcr.io
+            docker login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
             docker rm -f ${{ env.CONTAINER_NAME }} || true
             docker pull ${{ env.DOCKER_IMAGE_URL }}
             docker run --restart=always -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.SERVER_PORT }}:80 ${{ env.DOCKER_IMAGE_URL }}
