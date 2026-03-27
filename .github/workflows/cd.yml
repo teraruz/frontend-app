@@ -21,11 +21,11 @@ jobs:
         run: npm ci #clean i เเทน npm i
       - name: Build Project
         run: npm run build
-      - name: upload dist folder artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: dist-production
-          path: dist
+      # - name: upload dist folder artifact
+      #   uses: actions/upload-artifact@v7
+      #   with:
+      #     name: dist-production
+      #     path: dist
 
   auto-deploy-github-page:
     runs-on: ubuntu-latest
