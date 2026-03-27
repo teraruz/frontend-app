@@ -25,3 +25,26 @@ jobs:
         with:
           name: dist-production #ชื่อ artifact
           path: dist #path ของ artifact
+
+  auto-deploy-github-page:
+    runs-on: ubuntu-latest #กำหนดให้ทำงานบนระบบปฏิบัติการ Ubuntu
+    needs: build-prod-job #รอให้ build-prod-job ทำงานเสร็จก่อน
+    permissions:
+      contents: write # permission สำหรับการเขียน contents
+    steps:
+
+      - name: Download dist folder artifact
+        uses: actions/download-artifact@v6 #ดาวน์โหลด dist folder artifact
+        with:
+          name: dist-production #ชื่อ artifact
+          path: dist #path ของ artifact
+      - run: ls dist
+      - uses: actions/upload-pages-artifact@v6
+       
+
+      - name: Deploy to GitHub Pages
+        uses: SerhiiKa/VuePagesAction@1.0.4 #deploy ไปยัง GitHub Pages
+        with:
+          username: ${{ github.actor }}
+          reponame: ${{ github.event.repository.name }}
+          token: ${{ secrets.GITHUB_TOKEN }}

@@ -17,6 +17,7 @@ function App() {
         </div>
         <div>
           <h1>GIT SYSTEM</h1>
+          <p> VERSION 2.0.0 </p>
           <p>
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
